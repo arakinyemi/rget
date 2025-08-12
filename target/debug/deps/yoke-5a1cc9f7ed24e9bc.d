@@ -1,0 +1,13 @@
+C:\Users\USER\OneDrive\Desktop\RustExercises\rget\target\debug\deps\yoke-5a1cc9f7ed24e9bc.d: C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\lib.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\cartable_ptr.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\either.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\erased.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\kinda_sorta_dangling.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\macro_impls.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\yoke.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\yokeable.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\zero_from.rs
+
+C:\Users\USER\OneDrive\Desktop\RustExercises\rget\target\debug\deps\libyoke-5a1cc9f7ed24e9bc.rmeta: C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\lib.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\cartable_ptr.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\either.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\erased.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\kinda_sorta_dangling.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\macro_impls.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\yoke.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\yokeable.rs C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\zero_from.rs
+
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\lib.rs:
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\cartable_ptr.rs:
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\either.rs:
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\erased.rs:
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\kinda_sorta_dangling.rs:
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\macro_impls.rs:
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\yoke.rs:
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\yokeable.rs:
+C:\Users\USER\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\yoke-0.8.0\src\zero_from.rs:

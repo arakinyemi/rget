@@ -1,0 +1,10 @@
+[package]
+name = "rget"
+version = "0.1.0"
+edition = "2024"
+authors = ["Araoluwa Akinyemi <arakinyemi@gmail.com>"]
+
+[dependencies]
+clap = "4.5"
+indicatif = "0.18.0"
+reqwest = "0.12.22"
