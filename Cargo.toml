@@ -2,9 +2,11 @@
 name = "rget"
 version = "0.1.0"
 edition = "2024"
+description = "This is a Rust implementation of wget, a command-line utility for downloading files from the Internet"
 authors = ["Araoluwa Akinyemi <arakinyemi@gmail.com>"]
 
 [dependencies]
-clap = "4.5"
+clap = { version = "4.5", features = ["derive"] }
 indicatif = "0.18.0"
-reqwest = "0.12.22"
+reqwest = {version = "0.12.22", features = ["json", "blocking"] }
+url = "2.5.7"
