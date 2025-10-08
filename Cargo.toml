@@ -6,7 +6,9 @@ description = "This is a Rust implementation of wget, a command-line utility for
 authors = ["Araoluwa Akinyemi <arakinyemi@gmail.com>"]
 
 [dependencies]
+anyhow = "1.0.100"
 clap = { version = "4.5", features = ["derive"] }
 indicatif = "0.18.0"
 reqwest = {version = "0.12.22", features = ["json", "blocking"] }
+tokio = "1.47.1"
 url = "2.5.7"

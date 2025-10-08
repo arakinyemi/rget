@@ -4,7 +4,7 @@ use url::Url;
 
 #[derive(Parser, Debug)]
 #[command(name = "rget")]
-#[command(version, about, long_about = None)]
+#[command(version,long_about = None)]
 pub struct Cli {
     #[arg(value_name="URL")]
     pub url: Url,
@@ -17,12 +17,6 @@ pub struct Cli {
 
     #[arg(short = 'T', long, default_value_t = 30)]
     pub timeout: u64,
-
-    #[arg(short, long = "continue")]
-    pub continue_download: bool,
-
-    #[arg(short, long = "singlethread")]
-    pub single_thread: bool,
 
     #[arg(short, long="useragent")]
     pub user_agent: Option<String>,
