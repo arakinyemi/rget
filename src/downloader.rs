@@ -6,7 +6,7 @@ use std::io::{self, Write};
 use std::{fs::File, fs::OpenOptions, path::PathBuf, time::Duration};
 // use std::error::Error;
 use crate::config::Cli;
-// use std::time::Instant;
+
 
 pub struct ProgressWriter<W: Write> {
     inner: W,

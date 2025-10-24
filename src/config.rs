@@ -1,5 +1,6 @@
 use clap::{Parser};
-use std::{path::PathBuf, time::Duration};
+use std::path::PathBuf;
+// use std::time::Duration;
 use url::Url;
 
 #[derive(Parser, Debug)]
@@ -13,7 +14,7 @@ pub struct Cli {
     pub output: Option<PathBuf>,
 
     #[arg(short = 'n', long = "num-connections", default_value_t = 8)]
-    pub num_connections: usize,
+    pub num_connections: u64,
 
     #[arg(short = 'T', long, default_value_t = 30)]
     pub timeout: u64,
@@ -28,9 +29,8 @@ pub struct Cli {
     pub print_headers: bool
 
 }
-
-impl Cli {
-    pub fn timeout_duration(&self) -> Duration {
-        Duration::from_secs(self.timeout)
-    } 
-}
+// impl Cli{
+//     pub fn timeout_duration(&self) -> Duration {
+//         Duration::from_secs(self.timeout)
+//     }
+// }
