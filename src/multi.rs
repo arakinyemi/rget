@@ -4,9 +4,10 @@ use reqwest::{
     Client,
     header::{CONTENT_LENGTH, RANGE},
 };
-use std::{fs::OpenOptions, io::Read, io::Write, path::{Path, PathBuf}};
+use std::path::{PathBuf};
 use std::sync::Arc;
-use tokio::{io::AsyncWriteExt, task};
+use std::io::SeekFrom::Start;
+use tokio::{fs::{File, OpenOptions}, io::{AsyncSeekExt, AsyncWriteExt}, task};
 
 use crate::config::Cli;
 
@@ -24,33 +25,30 @@ pub async fn multi_download(config: &Cli) -> Result<PathBuf> {
     };
 
     let multi = Arc::new(MultiProgress::new());
-
+    let file = OpenOptions::new().write(true).create(true).open(&output_path).await?;
     let client = Client::new();
-
-    // let resp = client.head(config.url.clone()).send().await?;
-    // println!("{:?}", resp);
-    // let total_size = resp
-    //     .headers()
-    //     .get(CONTENT_LENGTH)
-    //     .and_then(|v| v.to_str().ok())
-    //     .and_then(|v| v.parse::<u64>().ok());
-
-    let total_size = 
-    // if let Some(size) = total_size {
-    //     size
-    // }
-    //  else
-      {
-        println!("HEAD response missing Content-Length. Trying GET...");
-        let resp = client.get(config.url.clone()).send().await?;
-        resp
-            .headers()
-            .get(CONTENT_LENGTH)
-            .and_then(|v| v.to_str().ok())
-            .and_then(|v| v.parse::<u64>().ok())
-            .unwrap_or(0)
+    
+    let total_size = match client.head(config.url.clone()).send().await {
+        Ok(resp) if resp.status().is_success() => {
+            resp.headers()
+                .get(CONTENT_LENGTH)
+                .and_then(|v| v.to_str().ok())
+                .and_then(|v| v.parse::<u64>().ok())
+                .unwrap()
+        }
+        Ok(_) | Err(_) => {
+            println!("HEAD request failed or missing Content-Length. Trying GET...");
+            let resp = client.get(config.url.clone()).send().await?;
+            resp
+                .headers()
+                .get(CONTENT_LENGTH)
+                .and_then(|v| v.to_str().ok())
+                .and_then(|v| v.parse::<u64>().ok())
+                .unwrap()
+        }
     };
 
+    file.set_len(total_size).await?;
 
     let num_connections = 8;
     let mut ranges = Vec::new();
@@ -65,8 +63,10 @@ pub async fn multi_download(config: &Cli) -> Result<PathBuf> {
         };
         ranges.push((start, end));
     }
+
     let mut handles = Vec::new();
     for (i, range) in ranges.iter().enumerate() {
+        let file = file.try_clone().await?;
         let url = config.url.to_string();
         let range = *range;
 
@@ -79,7 +79,8 @@ pub async fn multi_download(config: &Cli) -> Result<PathBuf> {
             .progress_chars("=>-"),
         );
         handles.push(task::spawn(
-            async move { download_chunk(&url, range, i, pb).await },
+            async move { download_chunk(file ,&url, range, pb).await },
+
         ))
     }
 
@@ -87,32 +88,16 @@ pub async fn multi_download(config: &Cli) -> Result<PathBuf> {
         handle.await??;
     }
 
-    let mut output = OpenOptions::new()
-        .create(true)
-        .write(true)
-        .truncate(true)
-        .open(&output_path)?;
+    multi.clear()?;
 
-    for i in 0..num_connections{
-        let chunk_name = format!("chunk_{}", i);
-        let path = Path::new(&chunk_name);
-        
-        let mut chunk = std::fs::File::open(path)?;
-
-        let mut buffer = Vec::new();
-        chunk.read_to_end(&mut buffer)?;
-
-        output.write_all(&buffer)?;
-        std::fs::remove_file(path)?;
-
-    }
     Ok(output_path)
 }
 
-async fn download_chunk (url: &str, range: (u64, u64), id: usize, pb: ProgressBar) -> anyhow::Result<()> {
+async fn download_chunk (mut file: File, url: &str, range: (u64, u64), pb: ProgressBar) -> anyhow::Result<()> {
     let client = Client::new();
     let range_header = format!("bytes={}-{}", range.0, range.1);
-
+    let mut cursor = range.0;
+    
     println!("Downloading range: {}", range_header);
 
     let mut resp = client
@@ -122,12 +107,12 @@ async fn download_chunk (url: &str, range: (u64, u64), id: usize, pb: ProgressBa
         .await?
         .error_for_status()?;
 
-    let mut file = tokio::fs::File::create(format!("chunk_{}", id)).await?;
 
     while let Some(chunk) = resp.chunk().await? {
+        file.seek(Start(cursor)).await?;
+        file.write(&chunk).await?;
         pb.inc(chunk.len() as u64);
-        file.write_all(&chunk).await?;
-        pb.finish_with_message("Done");
+        cursor += chunk.len() as u64;
     }
 
     Ok(())
